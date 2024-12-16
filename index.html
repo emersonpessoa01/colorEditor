@@ -139,8 +139,10 @@
 
     <!-- Adicionar Cor -->
     <div class="add-color">
-      <input type="text" id="newElement" placeholder="Nome do Elemento" />
-      <input type="color" id="newColor" value="#000000" />
+      <label for="newElement">Nome do Elemento:</label>
+      <input autofocus type="text" id="newElement" placeholder="Nome do Elemento" />
+      <label for="newColor">Selecionar Cor:</label>
+      <input type="color" id="newColor" value="#000000" title="Escolha uma cor" />
       <button class="btn" onclick="addColor()">Adicionar Cor</button>
     </div>
 
@@ -164,8 +166,10 @@
             <td>${item.element}</td>
             <td><div class="color-box" style="background-color: ${item.color};"></div></td>
             <td>
-              <input type="color" value="${item.color}" onchange="updateColor(${index}, this.value)">
-              <input type="text" value="${item.color}" oninput="updateColor(${index}, this.value)" maxlength="7">
+              <label for="colorPicker${index}">Selecionar Cor:</label>
+              <input type="color" id="colorPicker${index}" value="${item.color}" onchange="updateColor(${index}, this.value)" title="Escolha uma cor">
+              <label for="colorInput${index}">Código Hexadecimal:</label>
+              <input type="text" id="colorInput${index}" value="${item.color}" oninput="updateColor(${index}, this.value)" maxlength="7" placeholder="Ex: #FFFFFF">
             </td>
             <td>
               <button class="btn" onclick="deleteColor(${index})">Excluir</button>
