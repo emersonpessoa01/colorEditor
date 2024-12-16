@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editor de Cores Hexadecimais</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #26294a;
+        color: #fff;
+      }
+
+      .color-box {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        border: 1px solid #ccc;
+      }
+
+      input {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      input[type="text"]#newElement {
+        text-align: left;
+      }
+
+      input[type="color"] {
+        border: none;
+        cursor: pointer;
+        padding: 0px;
+        /* width: 100%; */
+      }
+
+      .btn {
+        padding: 8px 12px;
+        color: #fff;
+        background-color: #00c896;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background-color: #00a57a;
+      }
+
+      .add-color {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 20px;
+      }
+      input#newColor {
+        padding: 0;
+      }
+      /* Alinhar texto à esquerda */
+      input[type="text"]#newElement {
+        text-align: left;
+      }
+
+      .btn {
+        padding: 8px 12px;
+        color: #fff;
+        background-color: #00c896;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background-color: #00a57a;
+      }
+
+      .add-color {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+        margin: 0 auto;
+        width: 80%;
+      }
+      @media (max-width: 768px) {
+        .add-color {
+          width: 100%;
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Editor de Cores Hexadecimais</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Elemento</th>
+          <th>Cor (Visual)</th>
+          <th>Hexadecimal</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody id="colorTable">
+        <!-- Linhas de cores -->
+      </tbody>
+    </table>
+
+    <!-- Adicionar Cor -->
+    <div class="add-color">
+      <input type="text" id="newElement" placeholder="Nome do Elemento" />
+      <input type="color" id="newColor" value="#000000" />
+      <button class="btn" onclick="addColor()">Adicionar Cor</button>
+    </div>
+
+    <script>
+      const colors = [
+        { element: "Fundo Principal", color: "#26294A" },
+        { element: "Texto Principal", color: "#FFFFFF" },
+        { element: "Fundo do Botão", color: "#7B42F6" },
+        { element: "Texto do Botão", color: "#FFFFFF" },
+        { element: "Verde do Logotipo", color: "#00C896" },
+        { element: "Roxo do Logotipo", color: "#7A42F5" },
+        { element: "Texto de Navegação", color: "#C7C7D3" },
+      ];
+
+      function renderTable() {
+        const tableBody = document.getElementById("colorTable");
+        tableBody.innerHTML = "";
+        colors.forEach((item, index) => {
+          tableBody.innerHTML += `
+          <tr>
+            <td>${item.element}</td>
+            <td><div class="color-box" style="background-color: ${item.color};"></div></td>
+            <td>
+              <input type="color" value="${item.color}" onchange="updateColor(${index}, this.value)">
+              <input type="text" value="${item.color}" oninput="updateColor(${index}, this.value)" maxlength="7">
+            </td>
+            <td>
+              <button class="btn" onclick="deleteColor(${index})">Excluir</button>
+            </td>
+          </tr>
+        `;
+        });
+      }
+
+      function updateColor(index, value) {
+        if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+          colors[index].color = value;
+          renderTable();
+        } else if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+          // Verificação alternativa para o input color
+          colors[index].color = value;
+          renderTable();
+        }
+      }
+
+      function deleteColor(index) {
+        colors.splice(index, 1);
+        renderTable();
+      }
+
+      function addColor() {
+        const newElement = document.getElementById("newElement").value.trim();
+        const newColor = document.getElementById("newColor").value;
+
+        if (newElement && /^#[0-9A-Fa-f]{6}$/.test(newColor)) {
+          colors.push({ element: newElement, color: newColor });
+          document.getElementById("newElement").value = "";
+          renderTable();
+        }
+      }
+
+      // Inicializa a tabela
+      renderTable();
+    </script>
+  </body>
+</html>
