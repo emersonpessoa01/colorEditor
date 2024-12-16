@@ -11,6 +11,9 @@
         margin: 0;
         padding: 0;
       }
+      section{
+        padding: 2rem 2%;
+      }
 
       h1 {
         text-align: center;
@@ -18,11 +21,16 @@
       }
 
       table {
-        width: 80%;
+        max-width: 800px;
+        width: 100%;
         margin: 20px auto;
         border-collapse: collapse;
       }
-
+      @media(max-width:580px){
+        table{
+          width: 100%;
+        }
+      }
       table,
       th,
       td {
@@ -122,29 +130,31 @@
     </style>
   </head>
   <body>
-    <h1>Editor de Cores Hexadecimais</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Elemento</th>
-          <th>Cor (Visual)</th>
-          <th>Hexadecimal</th>
-          <th>Ação</th>
-        </tr>
-      </thead>
-      <tbody id="colorTable">
-        <!-- Linhas de cores -->
-      </tbody>
-    </table>
+    <section>
+      <h1>Editor de Cores Hexadecimais</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Elemento</th>
+            <th>Cor (Visual)</th>
+            <th>Hexadecimal</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody id="colorTable">
+          <!-- Linhas de cores -->
+        </tbody>
+      </table>
 
-    <!-- Adicionar Cor -->
-    <div class="add-color">
-      <label for="newElement">Nome do Elemento:</label>
-      <input autofocus type="text" id="newElement" placeholder="Nome do Elemento" />
-      <label for="newColor">Selecionar Cor:</label>
-      <input type="color" id="newColor" value="#000000" title="Escolha uma cor" />
-      <button class="btn" onclick="addColor()">Adicionar Cor</button>
-    </div>
+      <!-- Adicionar Cor -->
+      <div class="add-color">
+        <label for="newElement">Nome do Elemento:</label>
+        <input autofocus type="text" id="newElement" placeholder="Nome do Elemento" />
+        <label for="newColor">Selecionar Cor:</label>
+        <input type="color" id="newColor" value="#000000" title="Escolha uma cor" />
+        <button class="btn" onclick="addColor()">Adicionar Cor</button>
+      </div>
+    </section>
 
     <script>
       const colors = [
