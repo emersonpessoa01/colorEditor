@@ -4,7 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Editor de Cores Hexadecimais</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
@@ -15,12 +23,24 @@
       h1 {
         text-align: center;
         color: #333;
+        margin: 20px 0;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+        text-align: center;
       }
 
       table {
-        width: 80%;
-        margin: 20px auto;
+        width: 100%;
         border-collapse: collapse;
+        margin: 0 auto;
       }
 
       table,
@@ -33,6 +53,7 @@
       td {
         padding: 10px;
         text-align: center;
+        word-break: break-word;
       }
 
       th {
@@ -51,44 +72,36 @@
         padding: 5px;
         border: 1px solid #ccc;
         border-radius: 5px;
-      }
-
-      input[type="text"]#newElement {
-        text-align: left;
+        width: 100%;
       }
 
       input[type="color"] {
         border: none;
         cursor: pointer;
-        padding: 0px;
-        /* width: 100%; */
-      }
-
-      .btn {
-        padding: 8px 12px;
-        color: #fff;
-        background-color: #00c896;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      .btn:hover {
-        background-color: #00a57a;
+        width: 40px;
+        height: 40px;
+        margin: 0 auto;
       }
 
       .add-color {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         gap: 10px;
         margin: 20px;
+        max-width: 500px;
+        width: 100%;
       }
-      input#newColor {
-        padding: 0;
+
+      .btn-delete {
+        color: #ff5252;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
       }
-      /* Alinhar texto à esquerda */
-      input[type="text"]#newElement {
-        text-align: left;
+
+      .btn-delete:hover {
+        color: #ff0000;
       }
 
       .btn {
@@ -104,46 +117,82 @@
         background-color: #00a57a;
       }
 
-      .add-color {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 10px;
-        margin: 0 auto;
-        width: 80%;
-      }
-      @media (max-width: 768px) {
+      @media (min-width: 600px) {
         .add-color {
-          width: 100%;
-          padding: 10px;
+          flex-direction: row;
+          justify-content: center;
+        }
+
+        .add-color input {
+          flex: 1;
+        }
+      }
+      /* Responsividade para fontes */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 1.5rem; /* Reduz o tamanho do título */
+        }
+
+        th,
+        td {
+          font-size: 0.9rem; /* Reduz o tamanho da fonte da tabela */
+        }
+
+        .btn {
+          font-size: 0.8rem; /* Reduz o tamanho do botão */
+        }
+
+        input[type="text"],
+        input[type="color"] {
+          font-size: 0.8rem; /* Ajusta o tamanho dos inputs */
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 1.2rem; /* Título menor para telas muito pequenas */
+        }
+
+        th,
+        td {
+          font-size: 0.8rem; /* Fonte ainda menor para a tabela */
+        }
+
+        .btn {
+          font-size: 0.7rem; /* Botão menor */
+          padding: 6px 8px; /* Reduz o espaçamento */
+        }
+
+        input[type="text"],
+        input[type="color"] {
+          font-size: 0.7rem; /* Inputs menores */
         }
       }
     </style>
   </head>
   <body>
-    <h1>Editor de Cores Hexadecimais</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Elemento</th>
-          <th>Cor (Visual)</th>
-          <th>Hexadecimal</th>
-          <th>Ação</th>
-        </tr>
-      </thead>
-      <tbody id="colorTable">
-        <!-- Linhas de cores -->
-      </tbody>
-    </table>
+    <div class="container">
+      <h1>Editor de Cores Hexadecimais</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Elemento</th>
+            <th>Cor (Visual)</th>
+            <th>Hexadecimal</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody id="colorTable">
+          <!-- Linhas de cores -->
+        </tbody>
+      </table>
 
-    <!-- Adicionar Cor -->
-    <div class="add-color">
-      <label for="newElement">Nome do Elemento:</label>
-      <input autofocus type="text" id="newElement" placeholder="Nome do Elemento" />
-      <label for="newColor">Selecionar Cor:</label>
-      <input type="color" id="newColor" value="#000000" title="Escolha uma cor" />
-      <button class="btn" onclick="addColor()">Adicionar Cor</button>
+      <!-- Adicionar Cor -->
+      <div class="add-color">
+        <input autofocus type="text" id="newElement" placeholder="Nome do Elemento" />
+        <input type="color" id="newColor" value="#000000" />
+        <button class="btn" onclick="addColor()">Adicionar Cor</button>
+      </div>
     </div>
 
     <script>
@@ -166,13 +215,13 @@
             <td>${item.element}</td>
             <td><div class="color-box" style="background-color: ${item.color};"></div></td>
             <td>
-              <label for="colorPicker${index}">Selecionar Cor:</label>
-              <input type="color" id="colorPicker${index}" value="${item.color}" onchange="updateColor(${index}, this.value)" title="Escolha uma cor">
-              <label for="colorInput${index}">Código Hexadecimal:</label>
-              <input type="text" id="colorInput${index}" value="${item.color}" oninput="updateColor(${index}, this.value)" maxlength="7" placeholder="Ex: #FFFFFF">
+              <input type="color" value="${item.color}" onchange="updateColor(${index}, this.value)">
+              <input type="text" value="${item.color}" oninput="updateColor(${index}, this.value)" maxlength="7">
             </td>
             <td>
-              <button class="btn" onclick="deleteColor(${index})">Excluir</button>
+              <button class="btn-delete" onclick="deleteColor(${index})">
+                <i class="fas fa-trash"></i>
+              </button>
             </td>
           </tr>
         `;
@@ -181,10 +230,6 @@
 
       function updateColor(index, value) {
         if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
-          colors[index].color = value;
-          renderTable();
-        } else if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
-          // Verificação alternativa para o input color
           colors[index].color = value;
           renderTable();
         }
